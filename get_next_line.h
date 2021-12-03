@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/18 10:29:57 by rchallie          #+#    #+#             */
-/*   Updated: 2021/11/26 22:44:56 by yanab            ###   ########.fr       */
+/*   Updated: 2021/12/03 21:34:59 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdio.h>
 # include <fcntl.h>
 
 # ifndef BUFFER_SIZE

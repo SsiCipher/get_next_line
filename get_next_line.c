@@ -6,7 +6,7 @@
 /*   By: yanab <yanab@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/19 12:25:05 by yanab             #+#    #+#             */
-/*   Updated: 2021/11/26 22:50:54 by yanab            ###   ########.fr       */
+/*   Updated: 2021/12/03 21:50:01 by yanab            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*extract_rest(char *str)
 	return (rest);
 }
 
-void	fill_buff(int fd, char **rest)
+int	fill_buff(int fd, char **rest)
 {
 	int		read_bytes;
 	char	*buff;
@@ -64,8 +64,10 @@ void	fill_buff(int fd, char **rest)
 
 	buff = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (!buff)
-		return ;
+		return (0);
 	read_bytes = read(fd, buff, BUFFER_SIZE);
+	if (read_bytes == -1)
+		return (0);
 	while (read_bytes > 0)
 	{
 		buff[read_bytes] = '\0';
@@ -77,17 +79,21 @@ void	fill_buff(int fd, char **rest)
 		read_bytes = read(fd, buff, BUFFER_SIZE);
 	}
 	free(buff);
+	return (1);
 }
 
 char	*get_next_line(int fd)
 {
 	char		*tmp;
 	char		*line;
+	int			error;
 	static char	*rest = NULL;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	fill_buff(fd, &rest);
+	error = fill_buff(fd, &rest);
+	if (!error)
+		return (NULL);
 	line = extract_line(rest);
 	tmp = rest;
 	rest = extract_rest(rest);
